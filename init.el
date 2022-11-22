@@ -15,6 +15,9 @@
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative) ; Relative line numbers
 
+;; Paths
+(add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
 
 ;; Hooks
 (dolist (mode '(org-mode-hook
@@ -105,6 +108,34 @@
     :keymaps '(normal emacs)
     :prefix "SPC"))
 
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-l")
+  (setq lsp-headerline-breadcrumb-enable nil)
+  :hook (
+	 (c++-mode . lsp)
+	 (rust-mode . lsp)
+	 (lsp-mode . lsp-enable-which-key-integration)))
+
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :requires lsp-mode)
+
+(use-package company
+  :config
+  (global-company-mode 1)
+  :requires lsp-mode)
+
+(use-package lsp-treemacs
+  :commands lsp-treemacs-errors-list
+  :config
+  (lsp-treemacs-sync-mode 1)
+  :requires lsp-mode)
+
+(use-package lsp-ivy
+  :commands lsp-ivy-workspace-symbol
+  :requires (lsp-mode ivy))
+
 ;; Key bindings
 (general-define-key
  "C-k" 'counsel-find-file) ; Fuzzy file finder
@@ -114,4 +145,5 @@
  "/" 'counsel-grep-or-swiper) ; Search
 
 (local/leader-key
- "f" '(counsel-dired :which-key "Browse files"))
+  "f" '(counsel-dired :which-key "Browse files")
+  "q" '(lsp-treemacs-quick-fix :which-key "Lsp quickfix"))
