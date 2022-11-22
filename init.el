@@ -1,7 +1,6 @@
 (setq inhibit-startup-message t) ; Disable startup messages
 (setq visible-bell t) ; Disable obnoxious beeping
 (setq custom-file :noerror) ; Keep emacs from editing this file automatically
-(setq make-backup-files nil) ; Stop making backup files
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 
 ;; Modes
@@ -64,6 +63,7 @@
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-d-scroll t)
   (setq evil-want-C-i-jump nil)
+  (setq evil-want-C-g-bindings t)
   :config
   (evil-mode 1)
   (use-package evil-commentary)
@@ -139,6 +139,8 @@
 (use-package projectile
   :init
   (setq projectile-completion-system 'ivy)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
   :config
   (projectile-mode 1))
 
@@ -154,9 +156,12 @@
   (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
   (dashboard-setup-startup-hook))
 
+(use-package magit)
+
 ;; Key bindings
 (general-define-key
- "C-k" 'counsel-projectile) ; Fuzzy file finder
+ "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
+ "<f5>" 'projectile-run-project)
 
 (general-define-key
  :states 'normal
@@ -165,4 +170,5 @@
 (local/leader-key
   "f" '(counsel-dired :which-key "browse files")
   "q" '(lsp-treemacs-quick-fix :which-key "lsp quickfix")
-  "p" '(counsel-projectile-switch-project :which-key "open"))
+  "p" '(counsel-projectile-switch-project :which-key "open")
+  "g" '(magit-status :which-key "magit"))
