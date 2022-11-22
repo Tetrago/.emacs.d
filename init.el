@@ -1,7 +1,11 @@
 (setq inhibit-startup-message t) ; Disable startup messages
 (setq visible-bell t) ; Disable obnoxious beeping
 (setq custom-file :noerror) ; Keep emacs from editing this file automatically
+
+;; Preferences
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
+(setq-default tab-width 4) ; Tab width to 4 instead of 8
+(setq-default truncate-lines -1) ; Disable line truncation
 
 ;; Modes
 (menu-bar-mode -1)
@@ -23,6 +27,17 @@
 		term-mode-hook
 		eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode -1)))) ; Disable line numbers for some modes
+
+(defun local/org-mode ()
+  (org-indent-mode 1)
+  (org-modern-mode 1)
+  (visual-line-mode 1)
+  (local/visual-fill))
+
+(defun local/visual-fill ()
+  (setq visual-fill-column-width 150
+		visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
 
 ;; Font
 (set-face-attribute 'default nil :font "FiraCode NF" :height 100)
@@ -51,6 +66,8 @@
 (use-package counsel
   :bind
   ("M-x" . counsel-M-x)
+  :config
+  (setq counsel-find-file-ignore-regexp "#.+#")
   :requires ivy)
 
 (use-package swiper
@@ -65,8 +82,10 @@
   (setq evil-want-C-i-jump nil)
   (setq evil-want-C-g-bindings t)
   :config
+  ;; Visual line mode keys
   (evil-mode 1)
-  (use-package evil-commentary)
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (use-package evil-collection
     :config
     (evil-collection-init)))
@@ -126,6 +145,10 @@
   (global-company-mode 1)
   :requires lsp-mode)
 
+(use-package company-box
+  :hook company-mode
+  :requires company)
+
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list
   :config
@@ -137,11 +160,10 @@
   :requires (lsp-mode ivy))
 
 (use-package projectile
-  :init
-  (setq projectile-completion-system 'ivy)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :config
+  (setq projectile-completion-system 'ivy)
   (projectile-mode 1))
 
 (use-package counsel-projectile
@@ -158,6 +180,15 @@
 
 (use-package magit)
 
+(use-package org
+  :hook (org-mode . local/org-mode)
+  :config
+  (require 'org-mouse)
+  (use-package org-modern))
+
+(use-package visual-fill-column
+  :defer t)
+
 ;; Key bindings
 (general-define-key
  "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
@@ -168,7 +199,10 @@
  "/" 'counsel-grep-or-swiper) ; Search
 
 (local/leader-key
-  "f" '(counsel-dired :which-key "browse files")
+  "f" '(counsel-find-file :which-key "browse files")
   "q" '(lsp-treemacs-quick-fix :which-key "lsp quickfix")
   "p" '(counsel-projectile-switch-project :which-key "open")
   "g" '(magit-status :which-key "magit"))
+
+;; C-l   . lsp
+;; C-c p . projectile
