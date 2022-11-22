@@ -136,14 +136,33 @@
   :commands lsp-ivy-workspace-symbol
   :requires (lsp-mode ivy))
 
+(use-package projectile
+  :init
+  (setq projectile-completion-system 'ivy)
+  :config
+  (projectile-mode 1))
+
+(use-package counsel-projectile
+  :requires (counsel projectile))
+
+(use-package dashboard
+  :config
+  (setq dashboard-banner-logo-title "Welcome to Turbo")
+  (setq dashboard-startup-banner 3)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-init-info t)
+  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+  (dashboard-setup-startup-hook))
+
 ;; Key bindings
 (general-define-key
- "C-k" 'counsel-find-file) ; Fuzzy file finder
+ "C-k" 'counsel-projectile) ; Fuzzy file finder
 
 (general-define-key
  :states 'normal
  "/" 'counsel-grep-or-swiper) ; Search
 
 (local/leader-key
-  "f" '(counsel-dired :which-key "Browse files")
-  "q" '(lsp-treemacs-quick-fix :which-key "Lsp quickfix"))
+  "f" '(counsel-dired :which-key "browse files")
+  "q" '(lsp-treemacs-quick-fix :which-key "lsp quickfix")
+  "p" '(counsel-projectile-switch-project :which-key "open"))
