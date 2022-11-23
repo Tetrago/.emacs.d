@@ -2,30 +2,24 @@
 (setq visible-bell t) ; Disable obnoxious beeping
 (setq custom-file :noerror) ; Keep emacs from editing this file automatically
 
-;; Preferences
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 (setq-default tab-width 4) ; Tab width to 4 instead of 8
 (setq-default truncate-lines -1) ; Disable line truncation
 
-;; Modes
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-(scroll-bar-mode -1)
-(set-fringe-mode 10)
+(menu-bar-mode -1) ; Disable menu bar
+(tool-bar-mode -1) ; Disable tool bar
+(tooltip-mode -1) ; Disable gui tooltips
+(scroll-bar-mode -1) ; Disable scroll bar
+(set-fringe-mode 10) ; Extra fringe space
+(electric-pair-mode 1) ; Delimiter matching
 
 (column-number-mode) ; Show column numbers
-(global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'relative) ; Relative line numbers
+(global-display-line-numbers-mode 1) ; Show line numbers
+(setq display-line-numbers-type 'relative) ; Display relative line numbers
 
-;; Paths
-(add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
-
-;; Hooks
 (dolist (mode '(org-mode-hook
-		term-mode-hook
-		eshell-mode-hook))
+        term-mode-hook
+        eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode -1)))) ; Disable line numbers for some modes
 
 (defun local/org-mode ()
@@ -36,26 +30,27 @@
 
 (defun local/visual-fill ()
   (setq visual-fill-column-width 150
-		visual-fill-column-center-text t)
+        visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
-;; Font
 (set-face-attribute 'default nil :font "FiraCode NF" :height 100)
 
-;; Setup packages
 (require 'package)
+
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
 (package-initialize)
+
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Setup use-package
 (unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+    (package-install 'use-package))
+
 (require 'use-package)
+
 (setq use-package-always-ensure t)
 
-;; Packages
 (use-package ivy
   :config
   (ivy-mode 1)
@@ -75,20 +70,23 @@
 
 (use-package evil
   :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-d-scroll t)
-  (setq evil-want-C-i-jump nil)
-  (setq evil-want-C-g-bindings t)
+  (setq evil-want-integration t) ; Extra integration
+  (setq evil-want-keybinding nil) ; Don't add unnecessary key bindings
+  (setq evil-want-C-u-scroll t) ; Enable C-u scroll
+  (setq evil-want-C-d-scroll t) ; Enable C-d scroll
+  (setq evil-want-C-i-jump nil) ; Emacs key binding fix
+  (setq evil-want-C-g-bindings t) ; Enable C-g to quit
   :config
-  ;; Visual line mode keys
   (evil-mode 1)
+  ;; Visual line mode motion fix
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (use-package evil-collection
     :config
-    (evil-collection-init)))
+    (evil-collection-init))
+  (use-package evil-surround
+    :config
+    (global-evil-surround-mode 1)))
 
 (use-package all-the-icons)
 
@@ -102,6 +100,15 @@
   :custom
   (doom-modeline-height 15)
   :after (all-the-icons))
+
+(use-package dashboard
+  :config
+  (setq dashboard-banner-logo-title "Welcome to Turbo")
+  (setq dashboard-startup-banner 3)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-init-info t)
+  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+  (dashboard-setup-startup-hook))
 
 (use-package which-key
   :init
@@ -129,12 +136,14 @@
 
 (use-package lsp-mode
   :init
+(add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
   (setq lsp-keymap-prefix "C-l")
   (setq lsp-headerline-breadcrumb-enable nil)
   :hook (
-	 (c++-mode . lsp)
-	 (rust-mode . lsp)
-	 (lsp-mode . lsp-enable-which-key-integration)))
+     (c++-mode . lsp)
+     (rust-mode . lsp)
+     (lsp-mode . lsp-enable-which-key-integration)))
 
 (use-package lsp-ui
   :commands lsp-ui-mode
@@ -169,15 +178,6 @@
 (use-package counsel-projectile
   :requires (counsel projectile))
 
-(use-package dashboard
-  :config
-  (setq dashboard-banner-logo-title "Welcome to Turbo")
-  (setq dashboard-startup-banner 3)
-  (setq dashboard-center-content t)
-  (setq dashboard-set-init-info t)
-  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
-  (dashboard-setup-startup-hook))
-
 (use-package magit)
 
 (use-package org
@@ -189,10 +189,10 @@
 (use-package visual-fill-column
   :defer t)
 
-;; Key bindings
 (general-define-key
  "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
- "<f5>" 'projectile-run-project)
+ "C-i" 'lsp-ui-doc-glance ; Lsp parameters
+ "<f5>" 'projectile-run-project) ; Run project
 
 (general-define-key
  :states 'normal
@@ -203,6 +203,3 @@
   "q" '(lsp-treemacs-quick-fix :which-key "lsp quickfix")
   "p" '(counsel-projectile-switch-project :which-key "open")
   "g" '(magit-status :which-key "magit"))
-
-;; C-l   . lsp
-;; C-c p . projectile
