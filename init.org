@@ -286,7 +286,7 @@
       :config
       (lsp-treemacs-sync-mode 1)
       :requires lsp-mode)
-  #+end_Src
+  #+end_src
 
 + Ivy Compatibility
 
@@ -339,7 +339,7 @@ Adds padding to the edges of the buffer.
 #+begin_src elisp :tangle yes
   (use-package visual-fill-column
     :defer t)
-#+end_Src
+#+end_src
 
 * Key Bindings
 
@@ -349,8 +349,9 @@ Adds padding to the edges of the buffer.
     (general-define-key
      "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
      "C-i" 'lsp-ui-doc-glance ; Lsp parameters
+     "C-b" 'compile ; Compile
      "<f5>" 'projectile-run-project) ; Run project
- #+end_src
+  #+end_src
 
 + Evil mode bindings
 
@@ -358,7 +359,7 @@ Adds padding to the edges of the buffer.
     (general-define-key
      :states 'normal
      "/" 'counsel-grep-or-swiper) ; Search
- #+end_src
+  #+end_src
 
 + Leader key bindings
 

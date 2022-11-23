@@ -192,6 +192,7 @@
 (general-define-key
  "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
  "C-i" 'lsp-ui-doc-glance ; Lsp parameters
+ "C-b" 'compile ; Compile
  "<f5>" 'projectile-run-project) ; Run project
 
 (general-define-key
