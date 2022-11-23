@@ -1,4 +1,24 @@
-#+title Emacs Configuration
+#+title: Turbo Emacs
+
+* Setup
+
+1. Clone the repository
+
+   #+begin_src sh
+     git clone --depth 1 https://github.com/tetrago/.emacs.d ~/.emacs.d
+   #+end_src
+
+2. Setup all-the-icons
+
+   #+begin_src elisp
+     (all-the-icons-install-fonts)
+   #+end_src
+
+3. Setup vscode-cpptools
+
+   #+begin_src elisp
+     (dap-cpptools-setup)
+   #+end_src
 
 * Initial Configuration
 
