@@ -334,7 +334,7 @@ Counsel compatibility package:
 
 **** Visual Fill Column
 
-Addes padding to the edges of the buffer.
+Adds padding to the edges of the buffer.
 
 #+begin_src elisp :tangle yes
   (use-package visual-fill-column
