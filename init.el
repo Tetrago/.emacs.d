@@ -1,6 +1,8 @@
 (setq inhibit-startup-message t) ; Disable startup messages
 (setq visible-bell t) ; Disable obnoxious beeping
 (setq custom-file :noerror) ; Keep emacs from editing this file automatically
+(setq make-backup-files nil) ; Disable backup clutter
+(setq create-lockfiles nil) ; Disable lockfile clutter
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 (setq-default tab-width 4) ; Tab width to 4 instead of 8
@@ -11,6 +13,7 @@
 (scroll-bar-mode -1) ; Disable scroll bar
 (set-fringe-mode 10) ; Extra fringe space
 (electric-pair-mode 1) ; Delimiter matching
+(auto-save-mode -1) ; Disable auto saving
 
 (column-number-mode) ; Show column numbers
 (global-display-line-numbers-mode 1) ; Show line numbers
