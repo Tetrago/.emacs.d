@@ -1,6 +1,7 @@
 (setq inhibit-startup-message t) ; Disable startup messages
 (setq visible-bell t) ; Disable obnoxious beeping
 (setq custom-file :noerror) ; Keep emacs from editing this file automatically
+(setq mouse-wheel-progressive-speed nil) ; Disable scroll acceleration
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 (setq-default tab-width 4) ; Tab width to 4 instead of 8
@@ -8,7 +9,6 @@
 
 (menu-bar-mode -1) ; Disable menu bar
 (tool-bar-mode -1) ; Disable tool bar
-(tooltip-mode -1) ; Disable gui tooltips
 (scroll-bar-mode -1) ; Disable scroll bar
 (set-fringe-mode 10) ; Extra fringe space
 (electric-pair-mode 1) ; Delimiter matching
@@ -136,11 +136,13 @@
 
 (use-package lsp-mode
   :init
-(add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
+  (use-package flycheck)
+  (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
+  (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
   (setq lsp-keymap-prefix "C-l")
   (setq lsp-headerline-breadcrumb-enable nil)
   :hook (
+     (c-mode . lsp)
      (c++-mode . lsp)
      (rust-mode . lsp)
      (lsp-mode . lsp-enable-which-key-integration)))
@@ -162,11 +164,19 @@
   :commands lsp-treemacs-errors-list
   :config
   (lsp-treemacs-sync-mode 1)
-  :requires lsp-mode)
+  :requires (lsp-mode treemacs))
 
 (use-package lsp-ivy
   :commands lsp-ivy-workspace-symbol
   :requires (lsp-mode ivy))
+
+(use-package dap-mode
+  :config
+  (dap-mode 1)
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1)
+  (dap-ui-controls-mode 1)
+  (require 'dap-cpptools))
 
 (use-package projectile
   :bind-keymap
@@ -189,6 +199,20 @@
 (use-package visual-fill-column
   :defer t)
 
+(use-package treemacs)
+
+(use-package treemacs-evil
+  :requires (treemacs evil))
+
+(use-package treemacs-projectile
+  :requires (treemacs projectile))
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once))
+
+(use-package treemacs-magit
+  :requires (treemacs magit))
+
 (general-define-key
  "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
  "C-i" 'lsp-ui-doc-glance ; Lsp parameters
@@ -201,6 +225,10 @@
 
 (local/leader-key
   "f" '(counsel-find-file :which-key "browse files")
-  "q" '(lsp-treemacs-quick-fix :which-key "lsp quickfix")
+  "q" '(flycheck-list-errors :which-key "lsp quickfix")
   "p" '(counsel-projectile-switch-project :which-key "open")
-  "g" '(magit-status :which-key "magit"))
+  "g" '(magit-status :which-key "git")
+  "t" '(treemacs :which-key "tree")
+  "d" '(:ignore t :which-key "debug")
+  "d l" '(dap-debug :which-key "launch")
+  "d e" '(dap-debug-edit-template :which-key "edit"))
