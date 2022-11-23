@@ -1,7 +1,6 @@
 (setq inhibit-startup-message t) ; Disable startup messages
 (setq visible-bell t) ; Disable obnoxious beeping
 (setq custom-file :noerror) ; Keep emacs from editing this file automatically
-(setq mouse-wheel-progressive-speed nil) ; Disable scroll acceleration
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 (setq-default tab-width 4) ; Tab width to 4 instead of 8
@@ -37,8 +36,9 @@
 
 (require 'package)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
 
@@ -206,6 +206,10 @@
 (use-package visual-fill-column
   :commands visual-fill-column-mode)
 
+(use-package good-scroll
+  :config
+  (good-scroll-mode 1))
+
 (use-package treemacs
   :commands treemacs)
 
@@ -223,6 +227,9 @@
 
 (use-package rust-mode
   :commands rust-mode)
+
+(use-package cmake-mode
+  :commands cmake-mode)
 
 (general-define-key
  "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
