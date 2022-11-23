@@ -38,6 +38,7 @@
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 
 (package-initialize)
 
@@ -63,10 +64,10 @@
   ("M-x" . counsel-M-x)
   :config
   (setq counsel-find-file-ignore-regexp "#.+#")
-  :requires ivy)
+  :after ivy)
 
 (use-package swiper
-  :requires ivy)
+  :after ivy)
 
 (use-package evil
   :init
@@ -117,6 +118,7 @@
   (setq which-key-idle-delay 0.3))
 
 (use-package helpful
+  :commands (helpful-callable helpful-variable helpful-command helpful-key)
   :custom
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable)
@@ -135,12 +137,15 @@
     :prefix "SPC"))
 
 (use-package lsp-mode
+  :commands lsp
   :init
   (use-package flycheck)
   (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
   (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
   (setq lsp-keymap-prefix "C-l")
   (setq lsp-headerline-breadcrumb-enable nil)
+  :config
+  (lsp-enable-which-key-integration t)
   :hook (
      (c-mode . lsp)
      (c++-mode . lsp)
@@ -149,28 +154,27 @@
 
 (use-package lsp-ui
   :commands lsp-ui-mode
-  :requires lsp-mode)
+  :after lsp-mode)
 
 (use-package company
   :config
   (global-company-mode 1)
-  :requires lsp-mode)
-
-(use-package company-box
-  :hook company-mode
-  :requires company)
+  (use-package company-box
+    :hook company-mode)
+  :after lsp-mode)
 
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list
   :config
   (lsp-treemacs-sync-mode 1)
-  :requires (lsp-mode treemacs))
+  :after (lsp-mode treemacs))
 
 (use-package lsp-ivy
   :commands lsp-ivy-workspace-symbol
-  :requires (lsp-mode ivy))
+  :after (lsp-mode ivy))
 
 (use-package dap-mode
+  :commands dap-debug
   :config
   (dap-mode 1)
   (dap-ui-mode 1)
@@ -186,32 +190,39 @@
   (projectile-mode 1))
 
 (use-package counsel-projectile
-  :requires (counsel projectile))
+  :after (counsel projectile))
 
-(use-package magit)
+(use-package magit
+  :commands magit-status)
 
 (use-package org
+  :commands org-mode
+  :pin org
   :hook (org-mode . local/org-mode)
   :config
   (require 'org-mouse)
   (use-package org-modern))
 
 (use-package visual-fill-column
-  :defer t)
+  :commands visual-fill-column-mode)
 
-(use-package treemacs)
+(use-package treemacs
+  :commands treemacs)
 
 (use-package treemacs-evil
-  :requires (treemacs evil))
+  :after (treemacs evil))
 
 (use-package treemacs-projectile
-  :requires (treemacs projectile))
+  :after (treemacs projectile))
 
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 (use-package treemacs-magit
-  :requires (treemacs magit))
+  :after (treemacs magit))
+
+(use-package rust-mode
+  :commands rust-mode)
 
 (general-define-key
  "C-k" 'counsel-projectile-find-file ; Fuzzy file finder

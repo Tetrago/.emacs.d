@@ -103,6 +103,7 @@
     (require 'package)
 
     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+    (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 
     (package-initialize)
 
@@ -144,14 +145,14 @@
       ("M-x" . counsel-M-x)
       :config
       (setq counsel-find-file-ignore-regexp "#.+#")
-      :requires ivy)
+      :after ivy)
   #+end_src
 
 + Swiper
 
   #+begin_src elisp :tangle yes
     (use-package swiper
-      :requires ivy)
+      :after ivy)
   #+end_src
 
 *** Evil
@@ -234,6 +235,7 @@
 
   #+begin_src elisp :tangle yes
     (use-package helpful
+      :commands (helpful-callable helpful-variable helpful-command helpful-key)
       :custom
       (counsel-describe-function-function #'helpful-callable)
       (counsel-describe-variable-function #'helpful-variable)
@@ -262,12 +264,15 @@
 
   #+begin_src elisp :tangle yes
     (use-package lsp-mode
+      :commands lsp
       :init
       (use-package flycheck)
       (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
       (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
       (setq lsp-keymap-prefix "C-l")
       (setq lsp-headerline-breadcrumb-enable nil)
+      :config
+      (lsp-enable-which-key-integration t)
       :hook (
          (c-mode . lsp)
          (c++-mode . lsp)
@@ -280,7 +285,7 @@
   #+begin_src elisp :tangle yes
     (use-package lsp-ui
       :commands lsp-ui-mode
-      :requires lsp-mode)
+      :after lsp-mode)
   #+end_src
 
 + Completion (company)
@@ -289,15 +294,9 @@
     (use-package company
       :config
       (global-company-mode 1)
-      :requires lsp-mode)
-  #+end_src
-
-  Company Box is used to add icons to the company completion window:
-  
-  #+begin_src elisp :tangle yes
-    (use-package company-box
-      :hook company-mode
-      :requires company)
+      (use-package company-box
+        :hook company-mode)
+      :after lsp-mode)
   #+end_src
 
 + Treemacs Support
@@ -307,7 +306,7 @@
       :commands lsp-treemacs-errors-list
       :config
       (lsp-treemacs-sync-mode 1)
-      :requires (lsp-mode treemacs))
+      :after (lsp-mode treemacs))
   #+end_src
 
 + Ivy Compatibility
@@ -315,13 +314,14 @@
   #+begin_src elisp :tangle yes
     (use-package lsp-ivy
       :commands lsp-ivy-workspace-symbol
-      :requires (lsp-mode ivy))
+      :after (lsp-mode ivy))
   #+end_src
 
 + Dap
 
   #+begin_src elisp :tangle yes
     (use-package dap-mode
+      :commands dap-debug
       :config
       (dap-mode 1)
       (dap-ui-mode 1)
@@ -347,19 +347,22 @@ Counsel integration:
 
   #+begin_src elisp :tangle yes
     (use-package counsel-projectile
-      :requires (counsel projectile))
+      :after (counsel projectile))
   #+end_src
 
 **** Git Version Control (magit)
 
   #+begin_src elisp :tangle yes
-    (use-package magit)
+    (use-package magit
+      :commands magit-status)
   #+end_src
 
 **** Org Mode
 
 #+begin_src elisp :tangle yes
   (use-package org
+    :commands org-mode
+    :pin org
     :hook (org-mode . local/org-mode)
     :config
     (require 'org-mouse)
@@ -372,27 +375,28 @@ Adds padding to the edges of the buffer.
 
 #+begin_src elisp :tangle yes
   (use-package visual-fill-column
-    :defer t)
+    :commands visual-fill-column-mode)
 #+end_src
 
 **** Treemacs
 
 #+begin_src elisp :tangle yes
-  (use-package treemacs)
+  (use-package treemacs
+    :commands treemacs)
 #+end_src
 
 Evil integration:
 
 #+begin_src elisp :tangle yes
   (use-package treemacs-evil
-    :requires (treemacs evil))
+    :after (treemacs evil))
 #+end_src
 
 Projectile integration:
 
 #+begin_src elisp :tangle yes
   (use-package treemacs-projectile
-    :requires (treemacs projectile))
+    :after (treemacs projectile))
 #+end_src
 
 Icons support:
@@ -406,8 +410,17 @@ Magit support:
 
 #+begin_src elisp :tangle yes
   (use-package treemacs-magit
-    :requires (treemacs magit))
+    :after (treemacs magit))
 #+end_src
+
+*** Languages
+
++ Rust
+
+  #+begin_src elisp :tangle yes
+    (use-package rust-mode
+      :commands rust-mode)
+  #+end_src
 
 * Key Bindings
 
