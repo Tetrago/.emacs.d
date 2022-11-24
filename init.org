@@ -567,6 +567,5 @@ Magit support:
 + Other necessary key bindings
 
   | Key   | Function             |
-  | ---   | --------             |
   | C-l   | Lsp functions        |
   | C-c p | Projectile functions |
