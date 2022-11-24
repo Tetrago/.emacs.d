@@ -164,7 +164,7 @@
   :config
   (global-company-mode 1)
   (use-package company-box
-    :hook company-mode)
+  :hook company-mode)
   :after lsp-mode)
 
 (use-package lsp-treemacs
@@ -190,6 +190,7 @@
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :config
+  (setq projectile-enable-caching nil)
   (setq projectile-completion-system 'ivy)
   (projectile-mode 1))
 
