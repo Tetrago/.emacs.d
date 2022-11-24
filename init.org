@@ -519,13 +519,17 @@ Magit support:
 
 + C
 
-  C syle formatting:
-
   #+begin_src elisp :tangle yes
       (setq c-default-style "bsd")
       (setq-default c-basic-offset 4)
   #+end_src
-  
+
++ CMake
+
+  #+begin_src elisp :tangle yes
+    (setq cmake-tab-width 4)
+  #+end_src
+
 
 * Key Bindings
 

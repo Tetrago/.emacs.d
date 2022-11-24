@@ -312,6 +312,8 @@
 (setq c-default-style "bsd")
 (setq-default c-basic-offset 4)
 
+(setq cmake-tab-width 4)
+
 (general-define-key
   :states 'normal
   "/" 'counsel-grep-or-swiper ; Search
