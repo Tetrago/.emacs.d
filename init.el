@@ -325,7 +325,11 @@
   "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
   "C-i" 'lsp-ui-doc-glance ; Lsp parameters
   "C-b" 'projectile-compile-project ; Compile
-  "<f5>" 'projectile-run-project) ; Run project
+  "<f5>" 'projectile-run-project ; Run project
+  "<f9>" 'dap-breakpoint-toggle ; Toggle breakpoint
+  "<f10>" 'dap-next ; Step over
+  "<f11>" 'dap-step-in ; Step in
+  "<f12>" 'dap-step-out) ; Step out
 
 (local/leader-key
   "f" '(counsel-find-file :which-key "browse files")
