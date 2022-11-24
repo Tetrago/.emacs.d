@@ -445,22 +445,16 @@ Magit support:
 
 * Key Bindings
 
-+ Basic easy-access commands
++ Basic bindings
 
   #+begin_src elisp :tangle yes
     (general-define-key
-     "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
-     "C-i" 'lsp-ui-doc-glance ; Lsp parameters
-     "C-b" 'compile ; Compile
-     "<f5>" 'projectile-run-project) ; Run project
-  #+end_src
-
-+ Evil mode bindings
-
-  #+begin_src elisp :tangle yes
-    (general-define-key
-     :states 'normal
-     "/" 'counsel-grep-or-swiper) ; Search
+      :states 'normal
+      "/" 'counsel-grep-or-swiper ; Search
+      "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
+      "C-i" 'lsp-ui-doc-glance ; Lsp parameters
+      "C-b" 'compile ; Compile
+      "<f5>" 'projectile-run-project) ; Run project
   #+end_src
 
 + Leader key bindings

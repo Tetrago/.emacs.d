@@ -236,14 +236,12 @@
   :commands cmake-mode)
 
 (general-define-key
- "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
- "C-i" 'lsp-ui-doc-glance ; Lsp parameters
- "C-b" 'compile ; Compile
- "<f5>" 'projectile-run-project) ; Run project
-
-(general-define-key
- :states 'normal
- "/" 'counsel-grep-or-swiper) ; Search
+  :states 'normal
+  "/" 'counsel-grep-or-swiper ; Search
+  "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
+  "C-i" 'lsp-ui-doc-glance ; Lsp parameters
+  "C-b" 'compile ; Compile
+  "<f5>" 'projectile-run-project) ; Run project
 
 (local/leader-key
   "f" '(counsel-find-file :which-key "browse files")
