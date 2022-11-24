@@ -1,10 +1,10 @@
 (setq inhibit-startup-message t ; Disable startup messages
-  visible-bell t ; Disable obnoxious beeping
-  custom-file :noerror ; Keep emacs from editing this file automatically
-  make-backup-files nil ; Disable backup clutter
-  create-lockfiles nil ; Disable lockfile clutter
-  gc-cons-threshold 100000000 ; Increase garbage collection limit
-  read-process-output-max (* 1024 1024)) ; Increase process read limit for lsp
+      visible-bell t ; Disable obnoxious beeping
+      custom-file "~/.emacs.d/custom.el" ; Keep emacs from editing this file automatically
+      make-backup-files nil ; Disable backup clutter
+      create-lockfiles nil ; Disable lockfile clutter
+      gc-cons-threshold 100000000 ; Increase garbage collection limit
+      read-process-output-max (* 1024 1024)) ; Increase process read limit for lsp
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 (setq-default truncate-lines -1 ; Disable line trunction
@@ -323,7 +323,12 @@
 (local/leader-key
   "f" '(counsel-find-file :which-key "browse files")
   "q" '(flycheck-list-errors :which-key "lsp quickfix")
-  "p" '(counsel-projectile-switch-project :which-key "open")
+  "p" '(counsel-projectile-switch-project :which-key "switch project")
+  "a" '(:ignore t :which-key "actions")
+  "a c" '(projectile-configure-project :which-key "configure project")
+  "a b" '(projectile-compile-project :which-key "compile project")
+  "a r" '(projectile-run-project :which-key "run project")
+  "a t" '(projectile-test-project :which-key "test project")
   "g" '(magit-status :which-key "git")
   "t" '(treemacs :which-key "tree")
   "d" '(:ignore t :which-key "debug")
