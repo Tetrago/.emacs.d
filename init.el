@@ -3,6 +3,8 @@
 (setq custom-file :noerror) ; Keep emacs from editing this file automatically
 (setq make-backup-files nil) ; Disable backup clutter
 (setq create-lockfiles nil) ; Disable lockfile clutter
+(setq gc-cons-threshold 100000000) ; Increase garbage collection limit
+(setq read-process-output-max (* 1024 1024)) ;; Increase process read limit for lsp
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 (setq-default truncate-lines -1) ; Disable line truncation
