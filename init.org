@@ -551,7 +551,7 @@ Magit support:
       "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
       "C-i" 'lsp-ui-doc-glance ; Lsp parameters
       "C-b" 'projectile-compile-project ; Compile
-      "<f5>" 'projectile-run-project ; Run project
+      "<f5>" 'dap-continue ; Continue form breakpoint
       "<f9>" 'dap-breakpoint-toggle ; Toggle breakpoint
       "<f10>" 'dap-next ; Step over
       "<f11>" 'dap-step-in ; Step in
