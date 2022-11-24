@@ -32,6 +32,7 @@
         create-lockfiles nil ; Disable lockfile clutter
         gc-cons-threshold 100000000 ; Increase garbage collection limit
         read-process-output-max (* 1024 1024)) ; Increase process read limit for lsp
+  (load custom-file)
 #+end_src
 
 ** Basic Program Behavior Settings

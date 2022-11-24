@@ -5,6 +5,7 @@
       create-lockfiles nil ; Disable lockfile clutter
       gc-cons-threshold 100000000 ; Increase garbage collection limit
       read-process-output-max (* 1024 1024)) ; Increase process read limit for lsp
+(load custom-file)
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
 (setq-default truncate-lines -1 ; Disable line trunction
