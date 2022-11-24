@@ -1,13 +1,15 @@
-(setq inhibit-startup-message t) ; Disable startup messages
-(setq visible-bell t) ; Disable obnoxious beeping
-(setq custom-file :noerror) ; Keep emacs from editing this file automatically
-(setq make-backup-files nil) ; Disable backup clutter
-(setq create-lockfiles nil) ; Disable lockfile clutter
-(setq gc-cons-threshold 100000000) ; Increase garbage collection limit
-(setq read-process-output-max (* 1024 1024)) ;; Increase process read limit for lsp
+(setq inhibit-startup-message t ; Disable startup messages
+  visible-bell t ; Disable obnoxious beeping
+  custom-file :noerror ; Keep emacs from editing this file automatically
+  make-backup-files nil ; Disable backup clutter
+  create-lockfiles nil ; Disable lockfile clutter
+  gc-cons-threshold 100000000 ; Increase garbage collection limit
+  read-process-output-max (* 1024 1024)) ; Increase process read limit for lsp
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
-(setq-default truncate-lines -1) ; Disable line truncation
+(setq-default truncate-lines -1 ; Disable line trunction
+              tab-width 4
+              indent-tabs-mode t)
 
 (menu-bar-mode -1) ; Disable menu bar
 (tool-bar-mode -1) ; Disable tool bar
@@ -307,13 +309,8 @@
 (use-package cmake-mode
   :commands cmake-mode)
 
-(defun local/c-mode ()
-  (setq c-default-style "bsd"
-        c-basic-offset 4
-        tab-width 4
-        indent-tabs-mode t))
-
-(add-hook 'c-mode-common-hook 'local/c-mode)
+(setq c-default-style "bsd")
+(setq-default c-basic-offset 4)
 
 (general-define-key
   :states 'normal
