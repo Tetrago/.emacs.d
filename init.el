@@ -5,7 +5,6 @@
 (setq create-lockfiles nil) ; Disable lockfile clutter
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
-(setq-default tab-width 4) ; Tab width to 4 instead of 8
 (setq-default truncate-lines -1) ; Disable line truncation
 
 (menu-bar-mode -1) ; Disable menu bar
@@ -23,17 +22,6 @@
         term-mode-hook
         eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode -1)))) ; Disable line numbers for some modes
-
-(defun local/org-mode ()
-  (org-indent-mode 1)
-  (org-modern-mode 1)
-  (visual-line-mode 1)
-  (local/visual-fill))
-
-(defun local/visual-fill ()
-  (setq visual-fill-column-width 150
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
 
 (set-face-attribute 'default nil :font "FiraCode NF" :height 100)
 
@@ -200,6 +188,12 @@
 (use-package magit
   :commands magit-status)
 
+(defun local/org-mode ()
+  (org-indent-mode 1)
+  (org-modern-mode 1)
+  (visual-line-mode 1)
+  (local/visual-fill))
+
 (use-package org
   :commands org-mode
   :pin org
@@ -207,6 +201,11 @@
   :config
   (require 'org-mouse)
   (use-package org-modern))
+
+(defun local/visual-fill ()
+  (setq visual-fill-column-width 150
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
   :commands visual-fill-column-mode)
@@ -235,6 +234,15 @@
 
 (use-package cmake-mode
   :commands cmake-mode)
+
+(defun local/c-mode ()
+  (setq c-default-style "bsd"
+        c-basic-offset 4
+        tab-width 4
+        indent-tabs-mode t)
+  (c-toggle-auto-newline))
+
+(add-hook 'c-mode-common-hook 'local/c-mode)
 
 (general-define-key
   :states 'normal

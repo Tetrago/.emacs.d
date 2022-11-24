@@ -36,7 +36,6 @@
 
 #+begin_src elisp :tangle yes
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; Map escape to escape
-  (setq-default tab-width 4) ; Tab width to 4 instead of 8
   (setq-default truncate-lines -1) ; Disable line truncation
 #+end_src
 
@@ -68,25 +67,6 @@
           term-mode-hook
           eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode -1)))) ; Disable line numbers for some modes
-  #+end_src
-
-+ Org Mode
-
-  #+begin_src elisp :tangle yes
-    (defun local/org-mode ()
-      (org-indent-mode 1)
-      (org-modern-mode 1)
-      (visual-line-mode 1)
-      (local/visual-fill))
-  #+end_src
-
-+ Visual Fill
-
-  #+begin_src elisp :tangle yes
-    (defun local/visual-fill ()
-      (setq visual-fill-column-width 150
-            visual-fill-column-center-text t)
-      (visual-fill-column-mode 1))
   #+end_src
 
 * Font Configuration
@@ -365,6 +345,14 @@ Counsel integration:
 **** Org Mode
 
 #+begin_src elisp :tangle yes
+  (defun local/org-mode ()
+    (org-indent-mode 1)
+    (org-modern-mode 1)
+    (visual-line-mode 1)
+    (local/visual-fill))
+#+end_src
+
+#+begin_src elisp :tangle yes
   (use-package org
     :commands org-mode
     :pin org
@@ -377,6 +365,13 @@ Counsel integration:
 **** Visual Fill Column
 
 Adds padding to the edges of the buffer.
+
+#+begin_src elisp :tangle yes
+  (defun local/visual-fill ()
+    (setq visual-fill-column-width 150
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1))
+#+end_src
 
 #+begin_src elisp :tangle yes
   (use-package visual-fill-column
@@ -442,6 +437,23 @@ Magit support:
   #+begin_src elisp :tangle yes
     (use-package cmake-mode
       :commands cmake-mode)
+  #+end_src
+
++ C
+
+  C syle formatting:
+
+  #+begin_src elisp :tangle yes
+    (defun local/c-mode ()
+      (setq c-default-style "bsd"
+            c-basic-offset 4
+            tab-width 4
+            indent-tabs-mode t)
+      (c-toggle-auto-newline))
+  #+end_src
+
+  #+begin_src elisp :tangle yes
+    (add-hook 'c-mode-common-hook 'local/c-mode)
   #+end_src
 
 * Key Bindings
