@@ -309,8 +309,7 @@
   (setq c-default-style "bsd"
         c-basic-offset 4
         tab-width 4
-        indent-tabs-mode t)
-  (c-toggle-auto-newline))
+        indent-tabs-mode t))
 
 (add-hook 'c-mode-common-hook 'local/c-mode)
 
