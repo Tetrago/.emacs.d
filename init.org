@@ -308,7 +308,7 @@
       ([remap describe-key] . helpful-key))
   #+end_src
 
-+ Key Binding (General)
++ Key Binding (general)
 
   #+begin_src elisp :tangle yes
     (use-package general
@@ -318,6 +318,14 @@
       (general-create-definer local/leader-key
         :keymaps '(normal emacs)
         :prefix "SPC"))
+  #+end_src
+
++ Popup Window Manager (popwin)
+
+  #+begin_src elisp :tangle yes
+    (use-package popwin
+      :config
+      (popwin-mode 1))
   #+end_src
 
 *** Language Server
@@ -530,7 +538,7 @@ Magit support:
   #+begin_src elisp :tangle yes
     (setq cmake-tab-width 4)
   #+end_src
-
+  
 
 * Key Bindings
 

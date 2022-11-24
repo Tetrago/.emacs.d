@@ -202,6 +202,10 @@
     :keymaps '(normal emacs)
     :prefix "SPC"))
 
+(use-package popwin
+  :config
+  (popwin-mode 1))
+
 (use-package lsp-mode
   :commands lsp
   :init
