@@ -317,7 +317,7 @@
   "/" 'counsel-grep-or-swiper ; Search
   "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
   "C-i" 'lsp-ui-doc-glance ; Lsp parameters
-  "C-b" 'compile ; Compile
+  "C-b" 'projectile-compile-project ; Compile
   "<f5>" 'projectile-run-project) ; Run project
 
 (local/leader-key
