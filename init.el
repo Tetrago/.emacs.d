@@ -78,6 +78,7 @@
   ;; Visual line mode motion fix
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-set-undo-system 'undo-redo)
   (use-package evil-collection
     :config
     (evil-collection-init))
