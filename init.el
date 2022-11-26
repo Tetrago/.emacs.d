@@ -108,6 +108,11 @@
   (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
   (dashboard-setup-startup-hook))
 
+(use-package highlight-indent-guides
+  :hook prog-mode
+  :config
+  (setq highlight-indent-guides-method 'character))
+
 (use-package ligature
   :config
   ;; Enable the "www" ligature in every possible major mode
