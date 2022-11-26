@@ -208,15 +208,6 @@
       (dashboard-setup-startup-hook))
   #+end_src
 
-+ Indent Guides
-
-  #+begin_src elisp :tangle yes
-    (use-package highlight-indent-guides
-      :hook prog-mode
-      :config
-      (setq highlight-indent-guides-method 'character))
-  #+end_src
-
 + Ligatures
 
   #+begin_src elisp :tangle yes
