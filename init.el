@@ -102,10 +102,13 @@
 (use-package dashboard
   :config
   (setq dashboard-banner-logo-title "Welcome to Turbo")
-  (setq dashboard-startup-banner 3)
+  (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)
   (setq dashboard-set-init-info t)
   (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+  (setq dashboard-items '((recents . 5) (projects . 5)))
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
   (dashboard-setup-startup-hook))
 
 (use-package ligature
