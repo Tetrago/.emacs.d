@@ -208,6 +208,7 @@
 
 (use-package popwin
   :config
+  (push '(compilation-mode :tail t :height 20) popwin:special-display-config)
   (popwin-mode 1))
 
 (use-package lsp-mode

@@ -284,7 +284,7 @@
       ;; per mode with `ligature-mode'.
       (global-ligature-mode t))
   #+end_src
-
+  
 *** Utility
 
 + Which Key
@@ -329,6 +329,7 @@
   #+begin_src elisp :tangle yes
     (use-package popwin
       :config
+      (push '(compilation-mode :tail t :height 20) popwin:special-display-config)
       (popwin-mode 1))
   #+end_src
 
