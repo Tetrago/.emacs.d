@@ -218,6 +218,7 @@
   (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
   (setq lsp-keymap-prefix "C-l")
   (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-enable-snippet nil)
   :config
   (lsp-enable-which-key-integration t)
   :hook (
