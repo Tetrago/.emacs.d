@@ -350,4 +350,5 @@
   "t" '(treemacs :which-key "tree")
   "d" '(:ignore t :which-key "debug")
   "d l" '(dap-debug :which-key "launch")
-  "d e" '(dap-debug-edit-template :which-key "edit"))
+  "d e" '(dap-debug-edit-template :which-key "edit")
+  "d q" '(dap-delete-session :which-key "quit"))
