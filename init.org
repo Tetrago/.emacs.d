@@ -516,6 +516,19 @@ Magit support:
     :after (treemacs magit))
 #+end_src
 
+**** Devdocs
+
+#+begin_src elisp :tangle yes
+  (use-package devdocs)
+#+end_src
+
+**** Expand Region
+
+#+begin_src elisp :tangle yes
+  (use-package expand-region)
+#+end_src
+
+
 *** Languages
 
 + Rust
@@ -529,23 +542,31 @@ Magit support:
 
   #+begin_src elisp :tangle yes
     (use-package cmake-mode
+      :config
+      (setq cmake-tab-width 4)
       :commands cmake-mode)
   #+end_src
 
 + C
 
   #+begin_src elisp :tangle yes
-      (setq c-default-style "bsd")
-      (setq-default c-basic-offset 4)
+    (setq c-default-style "bsd")
+    (setq-default c-basic-offset 4)
   #+end_src
 
-+ CMake
++ Markdown
 
   #+begin_src elisp :tangle yes
-    (setq cmake-tab-width 4)
+    (use-package markdown-mode)
+  #+end_src
+
++ JSON
+
+  #+begin_src elisp :tangle yes
+    (use-package json-mode)
   #+end_src
   
-
+  
 * Key Bindings
 
 + Basic bindings
@@ -557,6 +578,7 @@ Magit support:
       "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
       "C-i" 'lsp-ui-doc-glance ; Lsp parameters
       "C-b" 'projectile-compile-project ; Compile
+      "C-a" 'er/expand-region ; Expand region
       "<f5>" 'dap-continue ; Continue form breakpoint
       "<f9>" 'dap-breakpoint-toggle ; Toggle breakpoint
       "<f10>" 'dap-next ; Step over
@@ -581,7 +603,12 @@ Magit support:
       "d" '(:ignore t :which-key "debug")
       "d l" '(dap-debug :which-key "launch")
       "d e" '(dap-debug-edit-template :which-key "edit")
-      "d q" '(dap-delete-session :which-key "quit"))
+      "d q" '(dap-delete-session :which-key "quit")
+      "D" '(:ignore t :which-key "docs")
+      "D l" '(devdocs-lookup :which-key "lookup")
+      "D i" '(devdocs-install :which-key "install")
+      "D d" '(devdocs-delete :which-key "delete")
+      "D u" '(devdocs-update-all :which-key "update"))
   #+end_src
 
 + Other necessary key bindings
@@ -589,3 +616,4 @@ Magit support:
   | Key   | Function             |
   | C-l   | Lsp functions        |
   | C-c p | Projectile functions |
+  

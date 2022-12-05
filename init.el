@@ -314,16 +314,24 @@
 (use-package treemacs-magit
   :after (treemacs magit))
 
+(use-package devdocs)
+
+(use-package expand-region)
+
 (use-package rust-mode
   :commands rust-mode)
 
 (use-package cmake-mode
+  :config
+  (setq cmake-tab-width 4)
   :commands cmake-mode)
 
 (setq c-default-style "bsd")
 (setq-default c-basic-offset 4)
 
-(setq cmake-tab-width 4)
+(use-package markdown-mode)
+
+(use-package json-mode)
 
 (general-define-key
   :states 'normal
@@ -331,6 +339,7 @@
   "C-k" 'counsel-projectile-find-file ; Fuzzy file finder
   "C-i" 'lsp-ui-doc-glance ; Lsp parameters
   "C-b" 'projectile-compile-project ; Compile
+  "C-a" 'er/expand-region ; Expand region
   "<f5>" 'dap-continue ; Continue form breakpoint
   "<f9>" 'dap-breakpoint-toggle ; Toggle breakpoint
   "<f10>" 'dap-next ; Step over
@@ -351,4 +360,9 @@
   "d" '(:ignore t :which-key "debug")
   "d l" '(dap-debug :which-key "launch")
   "d e" '(dap-debug-edit-template :which-key "edit")
-  "d q" '(dap-delete-session :which-key "quit"))
+  "d q" '(dap-delete-session :which-key "quit")
+  "D" '(:ignore t :which-key "docs")
+  "D l" '(devdocs-lookup :which-key "lookup")
+  "D i" '(devdocs-install :which-key "install")
+  "D d" '(devdocs-delete :which-key "delete")
+  "D u" '(devdocs-update-all :which-key "update"))
