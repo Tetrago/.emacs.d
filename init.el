@@ -52,8 +52,13 @@
   :config
   (ivy-mode 1)
   (use-package ivy-rich
-    :init
-    (ivy-rich-mode 1)))
+    :config
+    (ivy-rich-mode 1))
+  (use-package ivy-posframe
+    :config
+    (setq ivy-posframe-height-alist '((t . 40)))
+    (setq ivy-posframe-display-function-alist '((t . ivy-posframe-display-at-frame-center)))
+    (ivy-posframe-mode 1)))
 
 (use-package counsel
   :bind
