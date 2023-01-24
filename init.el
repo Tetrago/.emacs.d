@@ -106,6 +106,7 @@
 
 (use-package dashboard
   :config
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
   (setq dashboard-banner-logo-title "Welcome to Turbo")
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)
@@ -337,6 +338,8 @@
 (use-package markdown-mode)
 
 (use-package json-mode)
+
+(use-package go-mode)
 
 (general-define-key
   :states 'normal
