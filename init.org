@@ -577,6 +577,12 @@ Magit support:
   #+begin_src elisp :tangle yes
     (use-package go-mode)
   #+end_src
+
++ Bazel
+
+  #+begin_src elisp :tangle yes
+    (use-package bazel)
+  #+end_src
   
   
 * Key Bindings

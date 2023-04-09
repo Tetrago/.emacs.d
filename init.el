@@ -341,6 +341,8 @@
 
 (use-package go-mode)
 
+(use-package bazel)
+
 (general-define-key
   :states 'normal
   "/" 'counsel-grep-or-swiper ; Search
