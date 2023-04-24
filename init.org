@@ -28,7 +28,7 @@
   (setq inhibit-startup-message t ; Disable startup messages
         visible-bell t ; Disable obnoxious beeping
         custom-file "~/.emacs.d/custom.el" ; Keep emacs from editing this file automatically
-        make-backup-files nil ; Disable backup clutter
+        make-backup-files nil ; Disable backup clutteR
         create-lockfiles nil ; Disable lockfile clutter
         gc-cons-threshold 100000000 ; Increase garbage collection limit
         read-process-output-max (* 1024 1024)) ; Increase process read limit for lsp
@@ -534,7 +534,6 @@ Magit support:
   (use-package expand-region)
 #+end_src
 
-
 *** Languages
 
 + Rust
@@ -582,6 +581,18 @@ Magit support:
 
   #+begin_src elisp :tangle yes
     (use-package bazel)
+  #+end_src
+
++ C#
+
+  #+begin_src elisp :tangle yes
+    (use-package csharp-mode)
+  #+end_src
+
++ Meson
+
+  #+begin_src elisp :tangle yes
+    (use-package meson-mode)
   #+end_src
   
   

@@ -1,7 +1,7 @@
 (setq inhibit-startup-message t ; Disable startup messages
       visible-bell t ; Disable obnoxious beeping
       custom-file "~/.emacs.d/custom.el" ; Keep emacs from editing this file automatically
-      make-backup-files nil ; Disable backup clutter
+      make-backup-files nil ; Disable backup clutteR
       create-lockfiles nil ; Disable lockfile clutter
       gc-cons-threshold 100000000 ; Increase garbage collection limit
       read-process-output-max (* 1024 1024)) ; Increase process read limit for lsp
@@ -342,6 +342,10 @@
 (use-package go-mode)
 
 (use-package bazel)
+
+(use-package csharp-mode)
+
+(use-package meson-mode)
 
 (general-define-key
   :states 'normal
